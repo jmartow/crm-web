@@ -17,17 +17,12 @@ get '/contacts/:id/edit' do
   erb :contacts
 end
 
-get '/contacts/:id' do
-  @crm_app_name = "My CRM"
-  erb :contacts
-end
-
 get '/contacts' do
   erb :contacts
 end
 
 get '/contacts/new' do
-  erb :new_contact
+	erb :new_contact
 end
 
 post '/contacts' do
@@ -36,8 +31,14 @@ post '/contacts' do
   redirect to('/contacts')
 end
 
-get "/contacts/1000" do
-  @contact = @@rolodex.find(1000)
-  erb :show_contact
+get "/contacts/:id" do
+  @contact = @@rolodex.find(params[:id].to_i)
+  if @contact
+    erb :show_contact
+  else
+    raise Sinatra::NotFound
+  end
 end
+
+
 
